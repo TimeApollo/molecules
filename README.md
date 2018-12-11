@@ -7,5 +7,3 @@ Start by making all combinations of indexs of intersection for each corner of th
 These indexs will be stored in a tuple with the 3 item in the tuple being the area.
 
 These tuples will then be run through a function that tests all permutations of the 4 strings and which order they can be in.
-
-I do what I want.
