@@ -14,6 +14,16 @@ Github: TimeApollo, Tander29
 __author__ = "Aaron Jackson and Travis Anderson"
 
 import argparse
+from itertools import permutations
+
+
+def mol_permutation(mol_group):
+    """Returns list of all possible permutations."""
+
+    perm = permutations([mol_group[0], mol_group[1],
+                         mol_group[2], mol_group[3]])
+    perm_list = list(perm)
+    return perm_list
 
 
 def find_largest_area(mol_groups, pos_combos):
@@ -30,12 +40,31 @@ def find_largest_area(mol_groups, pos_combos):
     move to next group.
     end if line starts with Q
     """
+    for mol_group in mol_groups:
+        """Get group of 4 molecules from list and permutations for group."""
+        valid = False
+        mol_perms = mol_permutation(mol_group)
+        for pos_combo in pos_combos:
+            """Pos combos is biggest area first, looking for smaller area,
+            cooridinates are a range """
+            for mol_perm in mol_perms:
+                """Mol Perms were found, now looping through each perm
+                to see if box exists."""
+                valid = check_for_valid_combo(pos_combo, mol_perm)
+                if valid:
+                    print(pos_combo[2])
+                    break
+            if valid:
+                break
 
-    return
+
+def check_for_valid_combo(pos_combo, mol_perm):
+    """ Compares a single combo(range of potential coordinates) to a single permutation """
 
 
 def combination_tuple():
-    """Returns list of tuples for combos from biggest to smallest area."""
+    """Returns list of tuples for combos from biggest to smallest area.
+    , coordinates are a range"""
     combos = []
     for i in range(3, 11):
         counter = 10
