@@ -68,16 +68,22 @@ def check_for_valid_combo(pos_combo, mol_perm):
     # need to subtract 1 to only account for gap and not include endpoint
     x_gap, y_gap = pos_combo[0] - 1, pos_combo[1] - 1
     s1, s2, s3, s4 = mol_perm
-    # Loops over first string and possible positions for first intersection.
+    # Loops over s1 for possible first intersection comparing s1 to s2.
     for i_s1 in range(1, 11 - x_gap):
-        # Loops over second string and intersections with first
+        # Loops over second string and intersections with first, s1 s2
         for i_s2 in range(1, 11 - y_gap):
-            # test if first intersection is not equal.
+            # test if first intersection is equal, s1, s2, if equal continue.
             if s1[i_s1] == s2[i_s2]:
+                # Loops over third string and intersections with second, s2 s3
                 for i_s3 in range(1, 11 - x_gap):
+                    # if intersection is equal, s2, s3, continue.
                     if s2[i_s2 + y_gap] == s3[i_s3]:
+                        # if 3 previous intersections are true,
+                        # loop over s4 for possible intersections.
                         for i_s4 in range(1, 11 - y_gap):
-                            if s1[i_s1 + x_gap] == s4[i_s4] and s3[i_s3 + x_gap] == s4[i_s4 + y_gap]:
+                            # compare s4 to s3/s1 with gap
+                            if (s1[i_s1 + x_gap] == s4[i_s4]
+                               and s3[i_s3 + x_gap] == s4[i_s4 + y_gap]):
                                 return True
     return False
 
