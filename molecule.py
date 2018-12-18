@@ -42,6 +42,8 @@ def find_largest_area(mol_groups, pos_combos):
     """
     for mol_group in mol_groups:
         """Get group of 4 molecules from list and permutations for group."""
+        if len(mol_group) == 1:
+            break
         valid = False
         mol_perms = mol_permutation(mol_group)
         for pos_combo in pos_combos:
@@ -56,10 +58,28 @@ def find_largest_area(mol_groups, pos_combos):
                     break
             if valid:
                 break
+        if not valid:
+            print(0)
 
 
 def check_for_valid_combo(pos_combo, mol_perm):
-    """ Compares a single combo(range of potential coordinates) to a single permutation """
+    """Compares a single combo(range of potential coordinates)
+    to a single permutation"""
+    # need to subtract 1 to only account for gap and not include endpoint
+    x_gap, y_gap = pos_combo[0] - 1, pos_combo[1] - 1
+    s1, s2, s3, s4 = mol_perm
+    # Loops over first string and possible positions for first intersection.
+    for i_s1 in range(1, 11 - x_gap):
+        # Loops over second string and intersections with first
+        for i_s2 in range(1, 11 - y_gap):
+            # test if first intersection is not equal.
+            if s1[i_s1] == s2[i_s2]:
+                for i_s3 in range(1, 11 - x_gap):
+                    if s2[i_s2 + y_gap] == s3[i_s3]:
+                        for i_s4 in range(1, 11 - y_gap):
+                            if s1[i_s1 + x_gap] == s4[i_s4] and s3[i_s3 + x_gap] == s4[i_s4 + y_gap]:
+                                return True
+    return False
 
 
 def combination_tuple():
