@@ -42,7 +42,7 @@ def find_largest_area(mol_groups, pos_combos):
     """
     for mol_group in mol_groups:
         """Get group of 4 molecules from list and permutations for group."""
-        if len(mol_group) == 1:
+        if mol_group[0][0] == 'Q':
             break
         valid = False
         mol_perms = mol_permutation(mol_group)
